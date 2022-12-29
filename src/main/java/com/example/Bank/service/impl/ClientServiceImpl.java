@@ -1,0 +1,39 @@
+package com.example.Bank.service.impl;
+
+import com.example.Bank.model.Client;
+import com.example.Bank.repo.ClientRepository;
+import com.example.Bank.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+public class ClientServiceImpl implements ClientService {
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Override
+    public Client addClient(Client client) {
+        return clientRepository.saveAndFlush(client);
+    }
+
+    @Override
+    public void deleteClient(long id) {
+        clientRepository.deleteById(id);
+    }
+
+    @Override
+    public Client getClientByPhoneNumber(String phoneNumber) {
+        return clientRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public Client editClient(Client client) {
+        return clientRepository.saveAndFlush(client);
+    }
+
+    @Override
+    public List<Client> getAllClient() {
+        return clientRepository.findAll();
+    }
+}
