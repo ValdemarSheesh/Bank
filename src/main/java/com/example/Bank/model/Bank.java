@@ -20,6 +20,8 @@ public class Bank {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
+    @OneToMany
     private List<Credit> credits;
+    @OneToMany
     private List<Client> clients;
 }
