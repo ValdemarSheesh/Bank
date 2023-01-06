@@ -1,7 +1,11 @@
 package com.example.Bank.service.impl;
 
 import com.example.Bank.model.Bank;
+import com.example.Bank.model.Client;
+import com.example.Bank.model.Credit;
 import com.example.Bank.repo.BankRepository;
+import com.example.Bank.repo.ClientRepository;
+import com.example.Bank.repo.CreditRepository;
 import com.example.Bank.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,29 +14,18 @@ import java.util.List;
 public class BankServiceImpl implements BankService {
     @Autowired
     private BankRepository bankRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private CreditRepository creditRepository;
 
     @Override
-    public Bank addBank(Bank bank) {
-        return bankRepository.saveAndFlush(bank);
+    public List<Credit> getAllCredits() {
+        return creditRepository.findAll();
     }
 
     @Override
-    public void deleteBank(long id) {
-        bankRepository.deleteById(id);
-    }
-
-    @Override
-    public Bank getBankByName(String name) {
-        return bankRepository.findByName(name);
-    }
-
-    @Override
-    public Bank editBank(Bank bank) {
-        return bankRepository.saveAndFlush(bank);
-    }
-
-    @Override
-    public List<Bank> getAllBank() {
-        return bankRepository.findAll();
+    public List<Client> getAllClients() {
+        return clientRepository.findAll();
     }
 }

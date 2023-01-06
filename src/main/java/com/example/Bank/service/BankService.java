@@ -1,13 +1,13 @@
 package com.example.Bank.service;
 
 import com.example.Bank.model.Bank;
+import com.example.Bank.model.Client;
+import com.example.Bank.model.Credit;
 
 import java.util.List;
 
 public interface BankService {
-    Bank addBank(Bank bank);
-    void deleteBank(long id);
-    Bank getBankByName(String name);
-    Bank editBank(Bank bank);
-    List<Bank> getAllBank();
+    List<Credit> getAllCredits();
+
+    List<Client> getAllClients();
 }

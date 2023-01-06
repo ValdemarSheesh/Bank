@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,7 +18,6 @@ public class Bank {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String name;
     @OneToMany
     private List<Credit> credits;
     @OneToMany
