@@ -4,7 +4,9 @@ import com.example.Bank.model.Credit;
 import com.example.Bank.repo.CreditRepository;
 import com.example.Bank.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreditServiceImpl implements CreditService {
 
     @Autowired

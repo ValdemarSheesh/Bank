@@ -8,9 +8,11 @@ import com.example.Bank.repo.ClientRepository;
 import com.example.Bank.repo.CreditRepository;
 import com.example.Bank.service.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BankServiceImpl implements BankService {
     @Autowired
     private BankRepository bankRepository;
