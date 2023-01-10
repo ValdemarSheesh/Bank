@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/clients")
 public class ClientController {
 
     @Autowired
@@ -16,17 +16,22 @@ public class ClientController {
 
     @PostMapping("save")
     public void saveClient(String name, String surname, String patronymic, String phoneNumber, String passportNumber) {
-        Client client = new Client(name, surname, patronymic, phoneNumber, passportNumber);
+        Client client = new Client();
         clientService.addClient(client);
     }
 
-    @GetMapping("clients")
-    public List<Client> getAllClient() {
+    @GetMapping("client")
+    public Client getClient(Long id) {
+        return clientService.getClientById(id);
+    }
+
+    @GetMapping
+    public List<Client> getAllClients() {
         return clientService.getAllClient();
     }
 
-    @DeleteMapping("delete")
-    public void deleteClient() {
-        clientService.deleteClient(1);
+    @DeleteMapping
+    public void deleteClient(Long id) {
+        clientService.deleteClient(id);
     }
 }
