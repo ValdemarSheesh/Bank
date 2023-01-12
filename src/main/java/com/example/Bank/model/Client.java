@@ -17,5 +17,5 @@ public class Client {
     private String surname;
     private String patronymic;
     private Integer phoneNumber;
-    private String passportNumber;
+    private Integer passportNumber;
 }

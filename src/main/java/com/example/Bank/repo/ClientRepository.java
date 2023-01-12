@@ -8,5 +8,5 @@ import org.springframework.data.repository.query.Param;
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("SELECT C from Client C where C.phoneNumber = :phoneNumber")
-    Client findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+    Client findByPhoneNumber(@Param("phoneNumber") Integer phoneNumber);
 }

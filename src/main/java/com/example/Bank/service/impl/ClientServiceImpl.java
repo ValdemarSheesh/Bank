@@ -25,8 +25,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client getClientByPhoneNumber(String phoneNumber) {
+    public Client getClientByPhoneNumber(Integer phoneNumber) {
         return clientRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public Client getClientById(Long id) {
+        return clientRepository.findById(id).get();
     }
 
     @Override
