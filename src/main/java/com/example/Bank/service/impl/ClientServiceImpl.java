@@ -1,5 +1,6 @@
 package com.example.Bank.service.impl;
 
+import com.example.Bank.exceptions.NotFoundException;
 import com.example.Bank.model.Client;
 import com.example.Bank.repo.ClientRepository;
 import com.example.Bank.service.ClientService;
@@ -21,7 +22,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteClient(long id) {
-        clientRepository.deleteById(id);
+        clientRepository.delete(clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with id " + id + " not found")));
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientById(Long id) {
-        return clientRepository.findById(id).get();
+        return clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with id " + id + " not found"));
     }
 
     @Override
