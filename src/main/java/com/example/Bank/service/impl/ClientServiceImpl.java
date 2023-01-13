@@ -37,7 +37,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client editClient(Client client) {
-        return clientRepository.saveAndFlush(getClientById(client.getId()));
+        getClientById(client.getId());
+        return clientRepository.saveAndFlush(client);
     }
 
     @Override

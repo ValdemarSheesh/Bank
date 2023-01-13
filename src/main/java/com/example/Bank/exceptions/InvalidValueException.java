@@ -1,19 +1,32 @@
 package com.example.Bank.exceptions;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InvalidValueException extends RuntimeException{
-    private BindingResult bindingResult;
-    public InvalidValueException(String message, BindingResult bindingResult) {
+
+    public InvalidValueException(String message) {
         super(message);
-        this.bindingResult = bindingResult;
     }
 
-    public BindingResult getBindingResult() {
-        return bindingResult;
-    }
+    public static String createMessage(BindingResult bindingResult) {
+        String message;
+        Map<String, String> errors = new HashMap<>();
 
-    public void setBindingResult(BindingResult bindingResult) {
-        this.bindingResult = bindingResult;
+        bindingResult.getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        if (errors.size() > 1)
+            message = "Invalid values: ";
+        else
+            message = "Invalid value: ";
+
+        return message + errors;
     }
 }
