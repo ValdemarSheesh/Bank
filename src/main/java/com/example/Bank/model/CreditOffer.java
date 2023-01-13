@@ -24,7 +24,7 @@ public class CreditOffer {
     @OneToOne
     @JoinColumn(name = "credit_id")
     private Credit credit;
-    private BigDecimal CreditSum;
+    private BigDecimal creditSum;
     @OneToOne
     @JoinColumn(name = "payment_schedule_id")
     private PaymentSchedule paymentSchedule;
