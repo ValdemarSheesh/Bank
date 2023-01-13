@@ -22,9 +22,7 @@ public class ClientController {
     private ClientServiceImpl clientService;
 
     @PostMapping("save")
-    public ResponseEntity<String> saveClient(@Validated @RequestBody ClientDto clientDto,
-                                             BindingResult bindingResult) {
-
+    public ResponseEntity<String> saveClient(@Validated @RequestBody ClientDto clientDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new InvalidValueException("Invalid value: ", bindingResult);
 
