@@ -23,7 +23,7 @@ public class PaymentScheduleImpl implements PaymentScheduleService {
 
     @Override
     public PaymentSchedule getPaymentScheduleById(long id) {
-        return paymentScheduleRepository.findById(id).orElseThrow(() -> new NotFoundException("Client with id " + id + " not found"));
+        return paymentScheduleRepository.findById(id).orElseThrow(() -> new NotFoundException("Payment schedule with id " + id + " not found"));
     }
 
     @Override

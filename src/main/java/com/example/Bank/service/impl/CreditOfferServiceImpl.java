@@ -1,5 +1,6 @@
 package com.example.Bank.service.impl;
 
+import com.example.Bank.exceptions.NotFoundException;
 import com.example.Bank.model.CreditOffer;
 import com.example.Bank.repo.CreditOfferRepository;
 import com.example.Bank.service.CreditOfferService;
@@ -19,16 +20,17 @@ public class CreditOfferServiceImpl implements CreditOfferService {
 
     @Override
     public void deleteCreditOffer(long id) {
-        creditOfferRepository.deleteById(id);
+        creditOfferRepository.delete(getCreditOfferById(id));
     }
 
     @Override
     public CreditOffer getCreditOfferById(long id) {
-        return creditOfferRepository.getById(id);
+        return creditOfferRepository.findById(id).orElseThrow(() -> new NotFoundException("Credit offer with id " + id + " not found"));
     }
 
     @Override
     public CreditOffer editCreditOffer(CreditOffer creditOffer) {
+        getCreditOfferById(creditOffer.getId());
         return creditOfferRepository.saveAndFlush(creditOffer);
     }
 }
