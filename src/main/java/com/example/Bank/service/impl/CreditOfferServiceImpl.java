@@ -7,6 +7,8 @@ import com.example.Bank.service.CreditOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CreditOfferServiceImpl implements CreditOfferService {
 
@@ -32,5 +34,10 @@ public class CreditOfferServiceImpl implements CreditOfferService {
     public CreditOffer editCreditOffer(CreditOffer creditOffer) {
         getCreditOfferById(creditOffer.getId());
         return creditOfferRepository.saveAndFlush(creditOffer);
+    }
+
+    @Override
+    public List<CreditOffer> getAllCreditOffer() {
+        return creditOfferRepository.findAll();
     }
 }
