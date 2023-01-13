@@ -6,11 +6,15 @@ import com.example.Bank.mapper.ClientMapper;
 import com.example.Bank.model.Client;
 import com.example.Bank.service.impl.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @RestController
@@ -21,11 +25,22 @@ public class ClientController {
     private ClientServiceImpl clientService;
 
     @PostMapping("save")
-    public void saveClient(@Validated @RequestBody ClientDto clientDto, BindingResult bindingResult) {
+    public ResponseEntity<String> saveClient(@Validated @RequestBody ClientDto clientDto,
+                                             BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+
+        bindingResult.getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
         if (bindingResult.hasErrors())
-            throw new InvalidValueException("Invalid value");
+            throw new InvalidValueException("Invalid value: " + errors);
+
         Client client = ClientMapper.INSTANCE.clientDtoToClient(clientDto);
         clientService.addClient(client);
+        return ResponseEntity.ok("Client added");
     }
 
     @GetMapping("/{id}")
@@ -35,20 +50,38 @@ public class ClientController {
     }
 
     @PutMapping("/update")
-    public void updateClient(@RequestParam(value = "id") Long id, @Validated @RequestBody ClientDto clientDto) {
+    public ResponseEntity<String> updateClient(@RequestParam(value = "id") Long id,
+                                               @Validated @RequestBody ClientDto clientDto,
+                                               BindingResult bindingResult) {
+        Map<String, String> errors = new HashMap<>();
+
+        bindingResult.getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        if (bindingResult.hasErrors())
+            throw new InvalidValueException("Invalid value: " + errors);
+
         Client client = ClientMapper.INSTANCE.clientDtoToClient(clientDto);
         client.setId(id);
         clientService.editClient(client);
+        return ResponseEntity.ok("Client updated");
     }
 
     @GetMapping()
-    public List<ClientDto> getAllClients() {
+    public ResponseEntity<?> getAllClients() {
         List<Client> clients = clientService.getAllClient();
-        return ClientMapper.INSTANCE.clientsToClientsDto(clients);
+        if (clients.isEmpty())
+            return ResponseEntity.ok("Clients is empty");
+        else
+            return ResponseEntity.ok(ClientMapper.INSTANCE.clientsToClientsDto(clients));
     }
 
     @DeleteMapping("/delete")
-    public void deleteClient(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<String> deleteClient(@RequestParam(value = "id") Long id) {
         clientService.deleteClient(id);
+        return ResponseEntity.ok("Client deleted");
     }
 }
