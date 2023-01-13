@@ -22,7 +22,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteClient(long id) {
-        clientRepository.delete(clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with id " + id + " not found")));
+        clientRepository.delete(getClientById(id));
     }
 
     @Override
@@ -32,12 +32,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientById(Long id) {
-        return clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Product with id " + id + " not found"));
+        return clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Client with id " + id + " not found"));
     }
 
     @Override
     public Client editClient(Client client) {
-        return clientRepository.saveAndFlush(client);
+        return clientRepository.saveAndFlush(getClientById(client.getId()));
     }
 
     @Override
