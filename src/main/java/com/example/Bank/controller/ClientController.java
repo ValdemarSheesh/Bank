@@ -22,7 +22,8 @@ public class ClientController {
     private ClientServiceImpl clientService;
 
     @PostMapping("save")
-    public ResponseEntity<String> saveClient(@Validated @RequestBody ClientDto clientDto, BindingResult bindingResult) {
+    public ResponseEntity<String> saveClient(@Validated @RequestBody ClientDto clientDto,
+                                             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new InvalidValueException(InvalidValueException.createMessage(bindingResult));
 
@@ -37,7 +38,7 @@ public class ClientController {
         return ClientMapper.INSTANCE.clientToClientDto(client);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<String> updateClient(@RequestParam(value = "id") Long id,
                                                @Validated @RequestBody ClientDto clientDto,
                                                BindingResult bindingResult) {
@@ -60,7 +61,7 @@ public class ClientController {
             return ResponseEntity.ok(ClientMapper.INSTANCE.clientsToClientsDto(clients));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public ResponseEntity<String> deleteClient(@RequestParam(value = "id") Long id) {
         clientService.deleteClient(id);
         return ResponseEntity.ok("Client deleted");
