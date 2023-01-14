@@ -21,7 +21,7 @@ public class ClientController {
     @Autowired
     private ClientServiceImpl clientService;
 
-    @PostMapping("save")
+    @PostMapping
     public ResponseEntity<String> saveClient(@Validated @RequestBody ClientDto clientDto,
                                              BindingResult bindingResult) {
         if (bindingResult.hasErrors())
