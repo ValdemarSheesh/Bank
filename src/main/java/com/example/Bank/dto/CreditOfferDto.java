@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @Setter
 public class CreditOfferDto {
 
-    private ClientDto clientDto;
     private CreditDto creditDto;
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     @Positive

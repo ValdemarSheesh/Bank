@@ -1,5 +1,6 @@
 package com.example.Bank.service;
 
+import com.example.Bank.model.Client;
 import com.example.Bank.model.CreditOffer;
 
 import java.util.List;
@@ -9,5 +10,5 @@ public interface CreditOfferService {
     void deleteCreditOffer(long id);
     CreditOffer getCreditOfferById(long id);
     CreditOffer editCreditOffer(CreditOffer creditOffer);
-    List<CreditOffer> getAllCreditOffer();
+    List<CreditOffer> getAllCreditOfferByClient(Client client);
 }

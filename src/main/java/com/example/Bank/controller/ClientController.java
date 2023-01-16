@@ -52,7 +52,7 @@ public class ClientController {
         return ResponseEntity.ok("Client updated");
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAllClients() {
         List<Client> clients = clientService.getAllClient();
         if (clients.isEmpty())
