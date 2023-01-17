@@ -16,6 +16,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class PaymentScheduleDto {
+
+    private Long id;
     @Pattern(regexp = "dd.MM.yyy")
     private LocalDate paymentDate;
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
