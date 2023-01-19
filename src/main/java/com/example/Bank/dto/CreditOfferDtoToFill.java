@@ -1,5 +1,6 @@
 package com.example.Bank.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -13,16 +14,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreditDto {
-
-    private Long id;
+public class CreditOfferDtoToFill {
+    @Valid
+    private CreditDto creditDto;
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     @Positive
     @Min(10000)
-    @Max(100000000)
-    private double creditLimit;
+    @Max(300000000)
+    private double creditSum;
+    @Digits(integer = 3, fraction = 0)
     @Positive
-    @Digits(integer = 2, fraction = 2)
     @Min(1)
-    private double interestRate;
+    @Max(360)
+    private int numOfMonths;
 }

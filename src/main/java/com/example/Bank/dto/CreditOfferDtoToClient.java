@@ -7,18 +7,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreditOfferDto {
+public class CreditOfferDtoToClient {
 
     private Long id;
     private CreditDto creditDto;
     @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     @Positive
-    private BigDecimal creditSum;
-    private PaymentScheduleDto paymentScheduleDto;
+    private double creditSum;
+    private List<PaymentScheduleDto> paymentScheduleDtoList;
 }

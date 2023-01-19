@@ -26,7 +26,7 @@ public class CreditOfferServiceImpl implements CreditOfferService {
     @Override
     public CreditOffer addCreditOffer(CreditOffer creditOffer) {
         creditRepository.saveAndFlush(creditOffer.getCredit());
-        paymentScheduleRepository.saveAndFlush(creditOffer.getPaymentSchedule());
+        paymentScheduleRepository.saveAllAndFlush(creditOffer.getPaymentSchedules());
         return creditOfferRepository.saveAndFlush(creditOffer);
     }
 
@@ -44,7 +44,7 @@ public class CreditOfferServiceImpl implements CreditOfferService {
     public CreditOffer editCreditOffer(CreditOffer creditOffer) {
         getCreditOfferById(creditOffer.getId());
         creditRepository.saveAndFlush(creditOffer.getCredit());
-        paymentScheduleRepository.saveAndFlush(creditOffer.getPaymentSchedule());
+        paymentScheduleRepository.saveAllAndFlush(creditOffer.getPaymentSchedules());
         return creditOfferRepository.saveAndFlush(creditOffer);
     }
 

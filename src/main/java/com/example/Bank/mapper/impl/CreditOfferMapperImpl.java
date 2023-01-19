@@ -1,6 +1,7 @@
 package com.example.Bank.mapper.impl;
 
-import com.example.Bank.dto.CreditOfferDto;
+import com.example.Bank.dto.CreditOfferDtoToClient;
+import com.example.Bank.dto.CreditOfferDtoToFill;
 import com.example.Bank.mapper.CreditMapper;
 import com.example.Bank.mapper.CreditOfferMapper;
 import com.example.Bank.mapper.PaymentScheduleMapper;
@@ -12,25 +13,26 @@ import java.util.stream.Collectors;
 
 @Service
 public class CreditOfferMapperImpl implements CreditOfferMapper {
+
     @Override
-    public CreditOfferDto creditOfferToCreditOfferDto(CreditOffer creditOffer) {
-        CreditOfferDto creditOfferDto = INSTANCE.creditOfferToCreditOfferDto(creditOffer);
-        creditOfferDto.setCreditDto(CreditMapper.INSTANCE.creditToCreditDto(creditOffer.getCredit()));
-        creditOfferDto.setPaymentScheduleDto(PaymentScheduleMapper.INSTANCE.paymentScheduleToPaymentScheduleDto(creditOffer.getPaymentSchedule()));
-        return creditOfferDto;
+    public CreditOfferDtoToClient creditOfferToCreditOfferDtoToClient(CreditOffer creditOffer) {
+        CreditOfferDtoToClient creditOfferDtoToClient = INSTANCE.creditOfferToCreditOfferDtoToClient(creditOffer);
+        creditOfferDtoToClient.setCreditDto(CreditMapper.INSTANCE.creditToCreditDto(creditOffer.getCredit()));
+        creditOfferDtoToClient.setPaymentScheduleDtoList(PaymentScheduleMapper.INSTANCE.paymentSchedulesToPaymentScheduleDtoList(creditOffer.getPaymentSchedules()));
+        return creditOfferDtoToClient;
     }
 
     @Override
-    public CreditOffer creditOfferDtoToCreditOffer(CreditOfferDto creditOfferDto) {
-        CreditOffer creditOffer = INSTANCE.creditOfferDtoToCreditOffer(creditOfferDto);
-        creditOffer.setCredit(CreditMapper.INSTANCE.creditDtoToCredit(creditOfferDto.getCreditDto()));
-        creditOffer.setPaymentSchedule(PaymentScheduleMapper.INSTANCE.paymentScheduleDtoToPaymentSchedule(creditOfferDto.getPaymentScheduleDto()));
+    public CreditOffer creditOfferDtoToFillToCreditOffer(CreditOfferDtoToFill creditOfferDtoToFill) {
+        CreditOffer creditOffer = INSTANCE.creditOfferDtoToFillToCreditOffer(creditOfferDtoToFill);
+        creditOffer.setCredit(CreditMapper.INSTANCE.creditDtoToCredit(creditOfferDtoToFill.getCreditDto()));
+        creditOffer.setPaymentSchedules(creditOfferDtoToFill);
         return creditOffer;
     }
 
     @Override
-    public List<CreditOfferDto> creditOffersToCreditOffersDto(List<CreditOffer> creditOffers) {
-        return creditOffers.stream().map(this::creditOfferToCreditOfferDto).collect(Collectors.toList());
+    public List<CreditOfferDtoToClient> creditOffersToCreditOffersDto(List<CreditOffer> creditOffers) {
+        return creditOffers.stream().map(this::creditOfferToCreditOfferDtoToClient).collect(Collectors.toList());
     }
 
 }

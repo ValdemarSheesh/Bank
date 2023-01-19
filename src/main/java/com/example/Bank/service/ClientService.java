@@ -11,4 +11,5 @@ public interface ClientService {
     Client getClientById(Long id);
     Client editClient(Client client);
     List<Client> getAllClient();
+    boolean containsPassportNumberInDB(Integer passportNumber);
 }

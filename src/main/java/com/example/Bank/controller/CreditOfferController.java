@@ -1,6 +1,7 @@
 package com.example.Bank.controller;
 
-import com.example.Bank.dto.CreditOfferDto;
+import com.example.Bank.dto.CreditOfferDtoToClient;
+import com.example.Bank.dto.CreditOfferDtoToFill;
 import com.example.Bank.exceptions.InvalidValueException;
 import com.example.Bank.mapper.impl.CreditOfferMapperImpl;
 import com.example.Bank.model.Client;
@@ -28,15 +29,17 @@ public class CreditOfferController {
     CreditOfferMapperImpl creditOfferMapper;
 
     @PostMapping
-    public ResponseEntity<String> saveCreditOffer(@Validated @RequestBody CreditOfferDto creditOfferDto,
+    public ResponseEntity<String> saveCreditOffer(@Validated @RequestBody CreditOfferDtoToFill creditOfferDtoToFill,
                                                   BindingResult bindingResult,
                                                   @RequestParam(value = "clientId") Long clientId) {
         if (bindingResult.hasErrors())
             throw new InvalidValueException(InvalidValueException.createMessage(bindingResult));
 
-        CreditOffer creditOffer = creditOfferMapper.creditOfferDtoToCreditOffer(creditOfferDto);
-        Client client = clientService.getClientById(clientId);
+        if (creditOfferDtoToFill.getCreditSum() > creditOfferDtoToFill.getCreditDto().getCreditLimit())
+            throw new InvalidValueException("Credit sum exceeds limit");
 
+        CreditOffer creditOffer = creditOfferMapper.creditOfferDtoToFillToCreditOffer(creditOfferDtoToFill);
+        Client client = clientService.getClientById(clientId);
         creditOffer.setClient(client);
         creditOfferService.addCreditOffer(creditOffer);
 
@@ -44,20 +47,21 @@ public class CreditOfferController {
     }
 
     @GetMapping("/{id}")
-    public CreditOfferDto getCreditOffer(@PathVariable Long id) {
+    public CreditOfferDtoToClient getCreditOffer(@PathVariable Long id) {
         CreditOffer creditOffer = creditOfferService.getCreditOfferById(id);
-        return creditOfferMapper.creditOfferToCreditOfferDto(creditOffer);
+        return creditOfferMapper.creditOfferToCreditOfferDtoToClient(creditOffer);
     }
 
     @PutMapping
     public ResponseEntity<String> updateCreditOffer(@RequestParam(value = "creditOfferId") Long creditOfferId,
-                                                    @Validated @RequestBody CreditOfferDto creditOfferDto,
+                                                    @RequestParam(value = "clientId") Long clientId,
+                                                    @Validated @RequestBody CreditOfferDtoToFill creditOfferDtoToFill,
                                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new InvalidValueException(InvalidValueException.createMessage(bindingResult));
 
-        CreditOffer creditOffer = creditOfferMapper.creditOfferDtoToCreditOffer(creditOfferDto);
-        Client client = clientService.getClientById(creditOfferId);
+        CreditOffer creditOffer = creditOfferMapper.creditOfferDtoToFillToCreditOffer(creditOfferDtoToFill);
+        Client client = clientService.getClientById(clientId);
 
         creditOffer.setId(creditOfferId);
         creditOffer.setClient(client);

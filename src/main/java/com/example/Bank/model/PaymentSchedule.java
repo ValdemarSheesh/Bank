@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -20,8 +19,8 @@ public class PaymentSchedule {
     @Column(name = "id", nullable = false)
     private Long id;
     private LocalDate paymentDate;
-    private BigDecimal paymentAmount;
-    private BigDecimal repaymentAmountOfCreditBody;
+    private double paymentAmount;
+    private double repaymentAmountOfCreditBody;
     private double repaymentAmountPercent;
 
 }

@@ -1,6 +1,7 @@
 package com.example.Bank.mapper;
 
-import com.example.Bank.dto.CreditOfferDto;
+import com.example.Bank.dto.CreditOfferDtoToClient;
+import com.example.Bank.dto.CreditOfferDtoToFill;
 import com.example.Bank.model.CreditOffer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -12,10 +13,10 @@ public interface CreditOfferMapper {
 
     CreditOfferMapper INSTANCE = Mappers.getMapper(CreditOfferMapper.class);
 
-    CreditOfferDto creditOfferToCreditOfferDto(CreditOffer creditOffer);
+    CreditOfferDtoToClient creditOfferToCreditOfferDtoToClient(CreditOffer creditOffer);
 
-    CreditOffer creditOfferDtoToCreditOffer(CreditOfferDto creditOfferDto);
+    CreditOffer creditOfferDtoToFillToCreditOffer(CreditOfferDtoToFill creditOfferDtoToFill);
 
-    List<CreditOfferDto> creditOffersToCreditOffersDto(List<CreditOffer> creditOffers);
+    List<CreditOfferDtoToClient> creditOffersToCreditOffersDto(List<CreditOffer> creditOffers);
 
 }
