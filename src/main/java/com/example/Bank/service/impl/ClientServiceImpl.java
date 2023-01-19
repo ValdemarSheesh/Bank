@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -44,5 +45,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> getAllClient() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public boolean containsPassportNumberInDB(Integer passportNumber) {
+        return getAllClient().stream().map(Client::getPassportNumber).collect(Collectors.toList()).contains(passportNumber);
     }
 }

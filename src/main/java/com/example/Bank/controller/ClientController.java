@@ -27,6 +27,9 @@ public class ClientController {
         if (bindingResult.hasErrors())
             throw new InvalidValueException(InvalidValueException.createMessage(bindingResult));
 
+        if (clientService.containsPassportNumberInDB(clientDto.getPassportNumber()))
+            throw new InvalidValueException("Passport number exists");
+
         Client client = ClientMapper.INSTANCE.clientDtoToClient(clientDto);
         clientService.addClient(client);
         return ResponseEntity.ok("Client added");

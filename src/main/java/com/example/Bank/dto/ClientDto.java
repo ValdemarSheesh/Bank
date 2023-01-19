@@ -13,6 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClientDto {
+
+    private Long id;
     @NotBlank
     private String name;
     @NotBlank
